@@ -16,6 +16,8 @@
         <main class="container mx-auto mt-4 p-4">
             {{ $slot }}
         </main>
+
+        <script src="{{ asset('js/script.js') }}"></script>
     </body>
 
 </html>

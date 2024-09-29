@@ -21,5 +21,6 @@ yarn-error.log
 
 ###
 
+.vite/
 composer.lock
 package-lock.json

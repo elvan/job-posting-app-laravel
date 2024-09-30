@@ -7,20 +7,22 @@
                         <i class="fa fa-arrow-alt-circle-left"></i>
                         Back To Listings
                     </a>
-                    <div class="ml-4 flex space-x-3">
-                        <a class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                            href="{{ route('jobs.edit', $job->id) }}">Edit</a>
-                        <!-- Delete Form -->
-                        <form method="POST" action="{{ route('jobs.destroy', $job->id) }}"
-                            onsubmit="return confirm('Are you sure that you want to delete this job?')">
-                            @csrf
-                            @method('DELETE')
-                            <button class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600" type="submit">
-                                Delete
-                            </button>
-                        </form>
-                        <!-- End Delete Form -->
-                    </div>
+                    @can('update', $job)
+                        <div class="ml-4 flex space-x-3">
+                            <a class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                                href="{{ route('jobs.edit', $job->id) }}">Edit</a>
+                            <!-- Delete Form -->
+                            <form method="POST" action="{{ route('jobs.destroy', $job->id) }}"
+                                onsubmit="return confirm('Are you sure that you want to delete this job?')">
+                                @csrf
+                                @method('DELETE')
+                                <button class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600" type="submit">
+                                    Delete
+                                </button>
+                            </form>
+                            <!-- End Delete Form -->
+                        </div>
+                    @endcan
                 </div>
                 <div class="p-4">
                     <h2 class="text-xl font-semibold">

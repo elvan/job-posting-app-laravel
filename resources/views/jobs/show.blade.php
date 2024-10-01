@@ -102,10 +102,30 @@
             @if ($job->company_website)
                 <a class="text-blue-500" href="{{ $job->company_website }}" target="_blank">Visit Website</a>
             @endif
-            <a class="mt-10 flex w-full items-center justify-center rounded-full bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-600"
-                href=""><i
-                    class="fas fa-bookmark mr-3"></i> Bookmark
-                Listing</a>
+
+            {{-- Bookmark Button --}}
+            @guest
+                <p class="mt-10 w-full rounded-full bg-gray-200 px-4 py-2 text-center font-bold text-gray-700">
+                    <i class="fas fa-info-circle mr-3"></i> You must be logged in to bookmark a job
+                </p>
+            @else
+                <form class="mt-10" method="POST"
+                    action="{{ auth()->user()->bookmarkedJobs()->where('job_id', $job->id)->exists()? route('bookmarks.destroy', $job->id): route('bookmarks.store', $job->id) }}">
+                    @csrf
+                    @if (auth()->user()->bookmarkedJobs()->where('job_id', $job->id)->exists())
+                        @method('DELETE')
+                        <button
+                            class="flex w-full items-center justify-center rounded-full bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600">
+                            <i class="fas fa-bookmark mr-3"></i> Remove Bookmark
+                        </button>
+                    @else
+                        <button
+                            class="flex w-full items-center justify-center rounded-full bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-600">
+                            <i class="fas fa-bookmark mr-3"></i> Bookmark Listing
+                        </button>
+                    @endif
+                </form>
+            @endguest
         </aside>
     </div>
 </x-layout>

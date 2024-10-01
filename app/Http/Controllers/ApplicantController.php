@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\JobApplied;
 use App\Models\Applicant;
 use App\Models\Job;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicantController extends Controller
 {
@@ -43,6 +45,9 @@ class ApplicantController extends Controller
         $application->job_id = $job->id;
         $application->user_id = auth()->id();
         $application->save();
+
+        // Send email to owner (Uncomment after mailtrap compliance form is submitted)
+        // Mail::to($job->user->email)->send(new JobApplied($application, $job));
 
         return redirect()->back()->with('success', 'Your application has been submitted');
     }
